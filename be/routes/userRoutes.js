@@ -3,8 +3,8 @@ const router = express.Router();
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
 
-const userModel = require('../models/userModel');
-const blacklistTokenModel = require('../models/blTokenModel')
+const userSchema = require('../models/userModel');
+const blacklistTokenSchema = require('../models/blTokenModel')
 
 //middleware
 const authUser = require('../middlewares/authMiddleware')
@@ -32,7 +32,7 @@ router.post('/register',
                     throw new Error("All fields are required");
                 }
             
-            const duplicateEmail = await userModel.findOne({ email });
+            const duplicateEmail = await userSchema.findOne({ email });
             if(duplicateEmail)
                 {
                     return res.status(409).json({ Message : "This email is not available" });
@@ -50,15 +50,15 @@ router.post('/register',
                 email,
                 password : hashedPassword
             }
-            console.log(userObject);
-            const user = await userModel.create(userObject)
+            const user = await userSchema.create(userObject)
             const token = jwt.sign(
                 {
                     id : user._id
                 },
                 process.env.JWT_SECRET,
-                {expiresIn : process.env.JWT_LIFETIME}
-            )  
+                {
+                    expiresIn : process.env.JWT_LIFETIME
+                })  
             if(user)
                 {
                     res.status(201).json({ Message : `New user with email ${email} created`, user, token})
@@ -66,11 +66,8 @@ router.post('/register',
             else
                 {
                     res.status(400).json({ Message : "Invalid user data"})
-                }
-              
-                    
-        }
-    )
+                }                    
+        })
 
 
 router.post('/login', 
@@ -80,13 +77,13 @@ router.post('/login',
     ],
     async(req, res, next) =>
         {
-            const { email, password} = req.body;
+            const { email, password } = req.body;
             if(!email || !password)
                 {
                     return res.status(400).json({ Message : "Please Provide details"})
                 }
 
-            const user = await userModel.findOne({ email }).select('+password');
+            const user = await userSchema.findOne({ email }).select('+password');
             if(!user)
                 {
                     return res.status(401).json({ Message : "Invalid credentials"})
@@ -101,30 +98,27 @@ router.post('/login',
                     id : user._id
                 },
                 process.env.JWT_SECRET,
-                {expiresIn : process.env.JWT_LIFETIME}
-            ) 
-
+                {
+                    expiresIn : process.env.JWT_LIFETIME
+                }) 
             res.cookie('cookieToken', token)
             res.status(200).json({ token, user})
-        }
-    )
+        })
 
 router.get('/profile', authUser,
     async(req, res, next) =>
         {
             res.status(200).json(req.user);
-        }
-    )
+        })
 
 router.get('/logout', authUser,
     async(req, res, next) =>
         {
             res.clearCookie('cookieToken');
             const token = req.cookies.cookieToken || req.headers.authorization?.split(' ')[1];
-            await blacklistTokenModel.create({ token });
+            await blacklistTokenSchema.create({ token });
             res.status(200).json({ Message : "Logged out"});
-        }
-)
+        })
 
 
 

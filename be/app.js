@@ -5,6 +5,7 @@ const express = require('express');
 const app = express();
 const connectDb = require('./config/connectDb');
 const userRoutes = require('./routes/userRoutes')
+const captainRoutes = require('./routes/captainRoutes')
 
 
 //middleware
@@ -23,6 +24,7 @@ app.get('/', (req, res) =>
     });
 
 app.use('/user', userRoutes);
+app.use('/captain', captainRoutes);
 
 const start = async() =>
     {

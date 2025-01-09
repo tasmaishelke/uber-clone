@@ -1,5 +1,5 @@
-const userModel = require('../models/userModel');
-const blacklistTokenModel = require('../models/blTokenModel')
+const userSchema = require('../models/userModel');
+const blacklistTokenSchema = require('../models/blTokenModel')
 
 const jwt = require('jsonwebtoken');
 
@@ -10,7 +10,7 @@ const authUser = async(req, res, next) =>
             {
                 return res.status(401).json({ Message : "Unauthorized 1"});
             }
-        const isBlacklisted = await blacklistTokenModel.findOne({ token : token }) ;
+        const isBlacklisted = await blacklistTokenSchema.findOne({ token : token }) ;
         if(isBlacklisted)
             {
                 return res.status(401).json({ Message : "Unauthorized 2"});
@@ -19,7 +19,7 @@ const authUser = async(req, res, next) =>
         try
             {
                 const decoded = jwt.verify(token, process.env.JWT_SECRET)
-                const user = await userModel.findById(decoded.id)
+                const user = await userSchema.findById(decoded.id)
                 req.user = user;
                 return next();                
             }
