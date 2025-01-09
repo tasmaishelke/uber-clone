@@ -10,6 +10,9 @@ const userRoutes = require('./routes/userRoutes')
 //middleware
 const cors = require('cors');
 app.use(cors());
+const cookieparser = require('cookie-parser');
+app.use(cookieparser());
+
 app.use(express.json());
 
 

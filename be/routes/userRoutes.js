@@ -4,7 +4,10 @@ const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
 
 const userModel = require('../models/userModel');
+const blacklistTokenModel = require('../models/blTokenModel')
 
+//middleware
+const authUser = require('../middlewares/authMiddleware')
 const { body, validationResult } = require('express-validator')
 
 
@@ -17,12 +20,17 @@ router.post('/register',
     ],
     async(req, res, next) =>
         {
-            const { fullName, email, password} = req.body;
+            const errors = validationResult(req);
+            if(!errors.isEmpty())
+                {
+                    return res.status(400).json({ errors : errors.array()});
+                }
+
+            const { fullName, email, password } = req.body;
             if(!fullName.firstName || !email || !password)
                 {
                     throw new Error("All fields are required");
                 }
-            console.log(req.body);
             
             const duplicateEmail = await userModel.findOne({ email });
             if(duplicateEmail)
@@ -46,9 +54,10 @@ router.post('/register',
             const user = await userModel.create(userObject)
             const token = jwt.sign(
                 {
-                    _id : user._id
+                    id : user._id
                 },
-                process.env.JWT_SECRET
+                process.env.JWT_SECRET,
+                {expiresIn : process.env.JWT_LIFETIME}
             )  
             if(user)
                 {
@@ -62,5 +71,61 @@ router.post('/register',
                     
         }
     )
+
+
+router.post('/login', 
+    [
+        body('email').isEmail().withMessage("Invalid email"),
+        body('password').isLength({ min : 2 }).withMessage("Password must contain at least 2 letters"),
+    ],
+    async(req, res, next) =>
+        {
+            const { email, password} = req.body;
+            if(!email || !password)
+                {
+                    return res.status(400).json({ Message : "Please Provide details"})
+                }
+
+            const user = await userModel.findOne({ email }).select('+password');
+            if(!user)
+                {
+                    return res.status(401).json({ Message : "Invalid credentials"})
+                }
+            const isPasswordCorrect = bcrypt.compareSync(password, user.password);
+            if(!isPasswordCorrect)
+                {
+                    return res.status(401).json({ message: "Invalid credentials" })
+                }
+            const token = jwt.sign(
+                {
+                    id : user._id
+                },
+                process.env.JWT_SECRET,
+                {expiresIn : process.env.JWT_LIFETIME}
+            ) 
+
+            res.cookie('cookieToken', token)
+            res.status(200).json({ token, user})
+        }
+    )
+
+router.get('/profile', authUser,
+    async(req, res, next) =>
+        {
+            res.status(200).json(req.user);
+        }
+    )
+
+router.get('/logout', authUser,
+    async(req, res, next) =>
+        {
+            res.clearCookie('cookieToken');
+            const token = req.cookies.cookieToken || req.headers.authorization?.split(' ')[1];
+            await blacklistTokenModel.create({ token });
+            res.status(200).json({ Message : "Logged out"});
+        }
+)
+
+
 
 module.exports = router
