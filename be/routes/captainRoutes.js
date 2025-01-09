@@ -3,9 +3,11 @@ const router = express.Router();
 
 
 const captainSchema = require('../models/captainModel');
+const blacklistTokenSchema = require('../models/blTokenModel');
 
 //middleware
-const { body, validationResult } = require('express-validator')
+const { authCaptain } = require('../middlewares/authMiddleware');
+const { body, validationResult } = require('express-validator');
 
 
 
@@ -71,10 +73,54 @@ router.post('/register',
         })
 
 
+router.post('/login', 
+    [
+        body('email').isEmail().withMessage("Invalid email"),
+        body('password').isLength({ min : 2 }).withMessage("Password must contain at least 2 letters"),
+    ],
+    async(req, res, next) =>
+        {
+            const errors = validationResult(req);
+            if(!errors.isEmpty())
+                {
+                    return res.status(400).json({ errors : errors.array()});
+                }
 
+            const { email, password } = req.body;
+            if(!email || !password)
+                {
+                    return res.status(400).json({ Message : "Please Provide details"})
+                }
 
+            const captain = await captainSchema.findOne({ email }).select('+password');
+            if(!captain)
+                {
+                    return res.status(401).json({ Message : "Invalid credentials"})
+                }
+            const isPasswordCorrect = await captain.comparePassword(password);
+            if(!isPasswordCorrect)
+                {
+                    return res.status(401).json({ message: "Invalid credentials" })
+                }
+            const token = await captain.generateAuthToken();
+            res.cookie('cookieToken', token)
+            res.status(200).json({ token, captain})
+        })
 
+router.get('/profile', authCaptain,
+    async(req, res, next) =>
+        {
+            res.status(200).json(req.captain);
+        })
 
+router.get('/logout', authCaptain,
+    async(req, res, next) =>
+        {
+            const token = req.cookies.cookieToken || req.headers.authorization?.split(' ')[1];
+            await blacklistTokenSchema.create({ token });
+            res.clearCookie('cookieToken');
+            res.status(200).json({ Message : "Logged out"});
+        })
 
 
 

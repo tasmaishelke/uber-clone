@@ -7,7 +7,7 @@ const userSchema = require('../models/userModel');
 const blacklistTokenSchema = require('../models/blTokenModel')
 
 //middleware
-const authUser = require('../middlewares/authMiddleware')
+const { authUser } = require('../middlewares/authMiddleware')
 const { body, validationResult } = require('express-validator')
 
 
@@ -77,6 +77,12 @@ router.post('/login',
     ],
     async(req, res, next) =>
         {
+            const errors = validationResult(req);
+            if(!errors.isEmpty())
+                {
+                    return res.status(400).json({ errors : errors.array()});
+                }
+                
             const { email, password } = req.body;
             if(!email || !password)
                 {
@@ -114,9 +120,9 @@ router.get('/profile', authUser,
 router.get('/logout', authUser,
     async(req, res, next) =>
         {
-            res.clearCookie('cookieToken');
             const token = req.cookies.cookieToken || req.headers.authorization?.split(' ')[1];
             await blacklistTokenSchema.create({ token });
+            res.clearCookie('cookieToken');
             res.status(200).json({ Message : "Logged out"});
         })
 
