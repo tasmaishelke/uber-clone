@@ -32,8 +32,6 @@ const CaptainLogin = () =>
           <form onSubmit={(e) =>
             {
               submitHandler(e)
-              console.log(email);
-              console.log(password);
             }}>
             <h3 className='text-base font-medium mb-2'>What's your Email</h3>
             <input 
@@ -61,7 +59,7 @@ const CaptainLogin = () =>
 
             <button 
               className='bg-[#111] text-white font-semibold mb-3 rounded px-4 py-2 w-full text-lg '>
-                Captain Login
+                Login Captain
             </button>
 
             <p className='text-center'>

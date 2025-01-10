@@ -1,6 +1,7 @@
-import React from 'react'
-import { useState } from 'react'
-import { Link } from 'react-router-dom'
+import React, { useState, useContext } from 'react'
+import { Link, useNavigate } from 'react-router-dom'
+import { UserDataContext } from '../context/UserContext'
+import axios from 'axios'
 
 const UserRegister = () => 
   {
@@ -8,12 +9,14 @@ const UserRegister = () =>
     const [lastName, setLastName] = useState('')    
     const [email, setEmail] = useState('')
     const [password, setPassword] = useState('')
-    const [userData, setUserData] = useState({})
 
-    const submitHandler = (e) =>
+    const navigate = useNavigate()
+    const { setUser } = useContext(UserDataContext)
+
+    const submitHandler = async(e) =>
       {
         e.preventDefault();
-        setUserData(
+        const newUser =
           {
             fullName : 
               {
@@ -22,9 +25,18 @@ const UserRegister = () =>
               },
             email,
             password
-          })
-        console.log(userData);    
+          }
+        const res = await axios.post(`${import.meta.env.VITE_BASE_URL}/user/register`, newUser)
+        if(res.status==201)
+          {
+            const { user, token } = res.data
+            setUser(user)
+            localStorage.setItem('token', token)
+            navigate('/home')
+          }
         setEmail('');
+        setFirstName('');
+        setLastName('');
         setPassword('');
       }
       
@@ -37,8 +49,6 @@ const UserRegister = () =>
           <form onSubmit={(e) =>
             {
               submitHandler(e)
-              console.log(email);
-              console.log(password);
             }}>
             <h3 className='text-base font-medium mb-2'>What's your Fullname</h3>
               <div className='flex gap-4 mb-6'>
@@ -89,7 +99,7 @@ const UserRegister = () =>
 
             <button 
               className='bg-[#111] text-white font-semibold mb-3 rounded px-4 py-2 w-full text-lg '>
-                User Register
+                Create User
             </button>
 
             <p className='text-center'>

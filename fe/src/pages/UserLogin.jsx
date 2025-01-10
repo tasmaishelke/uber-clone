@@ -1,23 +1,36 @@
-import React from 'react'
-import { useState } from 'react'
-import { Link } from 'react-router-dom'
+import React, { useState, useContext } from 'react'
+import { Link, useNavigate } from 'react-router-dom'
+import { UserDataContext } from '../context/UserContext'
+import axios from 'axios'
+
 
 
 const UserLogin = () => 
   {
     const [email, setEmail] = useState('')
     const [password, setPassword] = useState('')
-    const [userData, setUserData] = useState({})
 
-    const submitHandler = (e) =>
+    const navigate = useNavigate()
+    const { setUser } = useContext(UserDataContext)
+
+    const submitHandler = async(e) =>
       {
         e.preventDefault();
-        setUserData(
+        const userData = 
           {
             email,
             password
-          })
-        console.log(userData);    
+          }
+
+        const res = await axios.post(`${import.meta.env.VITE_BASE_URL}/user/login`, userData)
+        
+        if(res.status==200)
+          {
+            const { user, token } = res.data
+            setUser(user)
+            localStorage.setItem('token', token)
+            navigate('/home')
+          }
         setEmail('');
         setPassword('');
       }
@@ -31,8 +44,6 @@ const UserLogin = () =>
           <form onSubmit={(e) =>
             {
               submitHandler(e)
-              console.log(email);
-              console.log(password);
             }}>
             <h3 className='text-base font-medium mb-2'>What's your Email</h3>
             <input 
@@ -60,7 +71,7 @@ const UserLogin = () =>
 
             <button 
               className='bg-[#111] text-white font-semibold mb-3 rounded px-4 py-2 w-full text-lg '>
-                User Login
+                Login User
             </button>
 
             <p className='text-center'>

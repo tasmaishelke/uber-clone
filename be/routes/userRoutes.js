@@ -27,6 +27,8 @@ router.post('/register',
                 }
 
             const { fullName, email, password } = req.body;
+            console.log(req.body);
+            
             if(!fullName.firstName || !email || !password)
                 {
                     throw new Error("All fields are required");
@@ -92,12 +94,12 @@ router.post('/login',
             const user = await userSchema.findOne({ email }).select('+password');
             if(!user)
                 {
-                    return res.status(401).json({ Message : "Invalid credentials"})
+                    return res.status(401).json({ Message : "Invalid credentials1"})
                 }
             const isPasswordCorrect = bcrypt.compareSync(password, user.password);
             if(!isPasswordCorrect)
                 {
-                    return res.status(401).json({ message: "Invalid credentials" })
+                    return res.status(401).json({ message: "Invalid credentials2" })
                 }
             const token = jwt.sign(
                 {
