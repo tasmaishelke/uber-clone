@@ -16,7 +16,7 @@ const UserRegister = () =>
     const submitHandler = async(e) =>
       {
         e.preventDefault();
-        const newUser =
+        const userData =
           {
             fullName : 
               {
@@ -26,13 +26,14 @@ const UserRegister = () =>
             email,
             password
           }
-        const res = await axios.post(`${import.meta.env.VITE_BASE_URL}/user/register`, newUser)
+
+        const res = await axios.post(`${import.meta.env.VITE_BASE_URL}/user/register`, userData)
         if(res.status==201)
           {
             const { user, token } = res.data
             setUser(user)
             localStorage.setItem('token', token)
-            navigate('/home')
+            navigate('/user/home')
           }
         setEmail('');
         setFirstName('');

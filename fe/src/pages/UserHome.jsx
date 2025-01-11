@@ -2,10 +2,10 @@ import React from 'react'
 import { Link } from 'react-router-dom'
 
 
-const Home = () => {
+const UserHome = () => {
   return (
     <div>
-      Home
+      User Home
       <div>
         <Link to='/user/logout'>
             <button 
@@ -18,4 +18,4 @@ const Home = () => {
   )
 }
 
-export default Home
+export default UserHome

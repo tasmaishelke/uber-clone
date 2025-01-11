@@ -1,18 +1,28 @@
-import React from 'react'
-import { useState } from 'react'
-import { Link } from 'react-router-dom'
+import React, { useState, useContext } from 'react'
+import { Link, useNavigate } from 'react-router-dom'
+import { CaptainDataContext } from '../context/CaptainContext'
+import axios from 'axios'
+
+
 const CaptainRegister = () => 
   {
     const [firstName, setFirstName] = useState('')
     const [lastName, setLastName] = useState('')    
     const [email, setEmail] = useState('')
     const [password, setPassword] = useState('')
-    const [captainData, setCaptainData] = useState({})
 
-    const submitHandler = (e) =>
+    const [ vehicleColor, setVehicleColor ] = useState('')
+    const [ vehiclePlate, setVehiclePlate ] = useState('')
+    const [ vehicleCapacity, setVehicleCapacity ] = useState('')
+    const [ vehicleType, setVehicleType ] = useState('')
+
+    const navigate = useNavigate();
+    const { setCaptain } = useContext(CaptainDataContext)
+
+    const submitHandler = async(e) =>
       {
         e.preventDefault();
-        setCaptainData(
+        const captainData = 
           {
             fullName : 
               {
@@ -20,11 +30,32 @@ const CaptainRegister = () =>
                 lastName,
               },
             email,
-            password
-          })
-        console.log(captainData);    
+            password,
+            vehicle :
+              {
+                color : vehicleColor,
+                plate : vehiclePlate,
+                capacity : vehicleCapacity,
+                type : vehicleType
+              }
+          }
+
+        const res = await axios.post(`${import.meta.env.VITE_BASE_URL}/captain/register`, captainData)
+        if(res.status==201)
+          {
+            const { captain, token } = res.data
+            setCaptain(captain)
+            localStorage.setItem('token', token)
+            navigate('/captain/home')
+          }
+        setFirstName('');
+        setLastName('');
         setEmail('');
         setPassword('');
+        setVehicleColor('');
+        setVehiclePlate('');
+        setVehicleCapacity('');
+        setVehicleType('');
       }
       
 
@@ -83,6 +114,56 @@ const CaptainRegister = () =>
                 {
                   setPassword(e.target.value)
                 }} />
+            
+            <h3 className='text-base font-medium mb-2'>Vehicle Info</h3>
+              <div className='flex gap-4 mb-7'>
+                <input 
+                  className='bg-[#eeeeee] rounded px-4 py-2 border w-1/2 text-base placeholder:text-sm'
+                  required 
+                  type='text' 
+                  placeholder='Color'
+                  value={vehicleColor}
+                  onChange={(e) =>
+                    {
+                      setVehicleColor(e.target.value)
+                    }} />
+
+                <input 
+                  className='bg-[#eeeeee] rounded px-4 py-2 border w-1/2 text-base placeholder:text-sm'
+                  required 
+                  type='text' 
+                  placeholder='Plate'
+                  value={vehiclePlate}
+                  onChange={(e) =>
+                    {
+                      setVehiclePlate(e.target.value)
+                    }} />
+              </div>
+              <div className='flex gap-4 mb-7'>
+                <input 
+                  className='bg-[#eeeeee] rounded px-4 py-2 border w-1/2 text-base placeholder:text-sm'
+                  required 
+                  type='number' 
+                  placeholder='Capacity'
+                  value={vehicleCapacity}
+                  onChange={(e) =>
+                    {
+                      setVehicleCapacity(e.target.value)
+                    }} />
+                <select 
+                  className='bg-[#eeeeee] rounded px-4 py-2 border w-1/2 text-base placeholder:text-sm'
+                  required 
+                  value={vehicleType}
+                  onChange={(e) =>
+                    {
+                      setVehicleType(e.target.value)
+                    }}>
+                  <option value="" disabled>Select Vehicle Type</option>
+                  <option value="car">Car</option>
+                  <option value="auto">Auto</option>
+                  <option value="motorcycle">Motorcycle</option>
+                </select>
+              </div>
 
             <button 
               className='bg-[#111] text-white font-semibold mb-3 rounded px-4 py-2 w-full text-lg '>

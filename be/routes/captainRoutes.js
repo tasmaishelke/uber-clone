@@ -19,7 +19,7 @@ router.post('/register',
         body('vehicle.color').isLength({ min: 2 }).withMessage('Color must be at least 2 characters long'),
         body('vehicle.plate').isLength({ min: 2 }).withMessage('Plate must be at least 2 characters long'),
         body('vehicle.capacity').isInt({ min: 1 }).withMessage('Capacity must be at least 1'),
-        body('vehicle.vehicleType').isIn([ 'car', 'motorcycle', 'auto' ]).withMessage('Invalid vehicle type')
+        body('vehicle.type').isIn([ 'car', 'motorcycle', 'auto' ]).withMessage('Invalid vehicle type')
     ],
     async(req, res, next) =>
         {
@@ -30,7 +30,7 @@ router.post('/register',
                 }
 
             const { fullName, email, password, vehicle} = req.body;
-            if(!fullName.firstName || !email || !password || !vehicle.color || !vehicle.plate || !vehicle.capacity || !vehicle.vehicleType)
+            if(!fullName.firstName || !email || !password || !vehicle.color || !vehicle.plate || !vehicle.capacity || !vehicle.type)
                 {
                     throw new Error("All fields are required");
                 }
@@ -57,7 +57,7 @@ router.post('/register',
                         color : vehicle.color,
                         plate : vehicle.plate,
                         capacity : vehicle.capacity,
-                        vehicleType: vehicle.vehicleType,
+                        type: vehicle.type,
                     }
             }
             const captain = await captainSchema.create(captainObject)

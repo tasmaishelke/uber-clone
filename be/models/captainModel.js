@@ -65,7 +65,7 @@ const captainSchema = new mongoose.Schema(
                         required : [true, "Please provide a capacity"],
                         minLength : [1, "capacity must be at least 1"],
                     },
-                vehicleType :
+                type :
                     {
                         type : String,
                         required : [true, "Please provide a vehicle type"],
