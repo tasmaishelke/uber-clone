@@ -19,9 +19,7 @@ const CaptainProtectWrapper = ({ children }) =>
             {
               navigate('/captain/login')
             }
-      }, [token])
-
-      axios
+        axios
           .get(`${import.meta.env.VITE_BASE_URL}/captain/profile`,
             {
               headers : 
@@ -43,6 +41,8 @@ const CaptainProtectWrapper = ({ children }) =>
               localStorage.removeItem('token')
               navigate('/captain/login')            
             })
+      }, [token])
+
       if(isLoading)
         {
           return(
