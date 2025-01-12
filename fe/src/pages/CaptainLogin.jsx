@@ -3,7 +3,7 @@ import { Link, useNavigate } from 'react-router-dom'
 import { CaptainDataContext } from '../context/CaptainContext'
 import axios from 'axios'
 
-
+import captainLogo from '../assets/captain.jpg'
 
 const CaptainLogin = () => 
   {
@@ -39,7 +39,7 @@ const CaptainLogin = () =>
 
     return (
       <div className='h-screen flex justify-between flex-col w-full'>
-        <img className='w-16 ml-5 mt-5' src="https://th.bing.com/th/id/OIP.ohxjboZFgWfmL4ONxlNp3QHaIo?rs=1&pid=ImgDetMain" alt="Uber Logo" />
+        <img className='w-16 ml-5 mt-5' src={captainLogo} alt="Uber Logo" />
           <div className='p-7'>
 
             <form onSubmit={(e) =>
@@ -83,7 +83,7 @@ const CaptainLogin = () =>
 
           <div className='p-7'>
             <Link to='/user/login'
-              className='bg-[#af5e2f] flex items-center justify-center text-white font-semibold mb-5 rounded px-4 py-2 text-lg '>
+              className='bg-[#af5e2f] flex items-center justify-center text-white font-semibold rounded px-4 py-2 text-lg'>
                 Sign in as User
             </Link>
           </div>

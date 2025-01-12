@@ -3,6 +3,8 @@ import { Link, useNavigate } from 'react-router-dom'
 import { UserDataContext } from '../context/UserContext'
 import axios from 'axios'
 
+import userLogo from '../assets/user.png'
+
 const UserRegister = () => 
   {
     const [firstName, setFirstName] = useState('')
@@ -44,7 +46,7 @@ const UserRegister = () =>
 
     return (
       <div className='h-screen flex justify-between flex-col w-full'>
-        <img className='w-16 ml-5 mt-5' src="https://upload.wikimedia.org/wikipedia/commons/c/cc/Uber_logo_2018.png" alt="Uber Logo" />
+        <img className='w-16 ml-5 mt-5' src={userLogo} alt="Uber Logo" />
           <div className='p-7'>
 
             <form onSubmit={(e) =>
