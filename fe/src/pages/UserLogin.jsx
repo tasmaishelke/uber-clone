@@ -38,8 +38,8 @@ const UserLogin = () =>
 
     return (
       <div className='h-screen flex justify-between flex-col w-full'>
-        <img className='w-16 ml-5 mt-5' src={userLogo} alt="Uber Logo" />
-          <div className='p-7'>
+        <img className='w-16 ml-6 mt-6' src={userLogo} alt="Uber Logo" />
+          <div className='p-6'>
 
             <form onSubmit={(e) =>
               {
@@ -80,7 +80,7 @@ const UserLogin = () =>
             </form>        
           </div>
 
-          <div className='p-7'>
+          <div className='p-6'>
             <Link to='/captain/login'
               className='bg-[#356940] flex items-center justify-center text-white font-semibold rounded px-4 py-2 text-lg'>
                 Sign in as Captain

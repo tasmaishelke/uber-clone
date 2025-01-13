@@ -39,7 +39,7 @@ const UserProtectWrapper = ({ children }) =>
               localStorage.removeItem('token')
               navigate('/user/login')            
             })
-      })
+      }, [token])
 
       
         

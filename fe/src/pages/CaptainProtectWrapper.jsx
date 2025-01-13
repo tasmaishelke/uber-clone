@@ -39,7 +39,7 @@ const CaptainProtectWrapper = ({ children }) =>
               localStorage.removeItem('token')
               navigate('/captain/login')            
             })
-      })
+      }, [token])
 
       if(isLoading)
         {

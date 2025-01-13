@@ -62,8 +62,8 @@ const CaptainRegister = () =>
 
     return (
       <div className='h-screen flex justify-between flex-col w-full'>
-        <img className='w-16 ml-5 mt-5' src={captainLogo} alt="Uber Logo" />
-          <div className='p-7'>
+        <img className='w-16 ml-6 mt-6' src={captainLogo} alt="Uber Logo" />
+          <div className='p-6'>
 
             <form onSubmit={(e) =>
               {

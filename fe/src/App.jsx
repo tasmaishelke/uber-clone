@@ -1,5 +1,6 @@
 import React from 'react';
 import { Route, Routes } from 'react-router-dom';
+import 'remixicon/fonts/remixicon.css'
 import Start from './pages/Start';
 
 import UserRegister from './pages/UserRegister';
