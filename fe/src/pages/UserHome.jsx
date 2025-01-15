@@ -1,13 +1,14 @@
 import React, {useRef, useState} from 'react'
-import { Link } from 'react-router-dom'
 import gsap from 'gsap'
 import { useGSAP } from '@gsap/react'
 import LocationSearchPanel from '../components/LocationSearchPanel'
+import VehiclePanel from '../components/VehiclePanel'
+import ConfirmVehicle from '../components/ConfirmVehicle'
+import LookingDriver from '../components/LookingDriver'
+import ConfirmDriver from '../components/ConfirmDriver'
 
 import userLogo from '../assets/user.png'
-import carImg from '../assets/carImg.png'
-import bikeImg from '../assets/bikeImg.png'
-import autoImg from '../assets/autoImg.png'
+
 
 const UserHome = () => 
   {
@@ -15,10 +16,16 @@ const UserHome = () =>
     const [destination, setDestination] = useState('')
     const [locationPanelOpen, setLocationPanelOpen] = useState(false)
     const [vehiclePanelOpen, setVehiclePanelOpen] = useState(false)
+    const [confirmVehiclePanelOpen, setConfirmVehiclePanelOpen] = useState(false)
+    const [lookingDriverPanelOpen, setLookingDriverPanelOpen] = useState(false)
+    const [confirmDriverPanelOpen, setConfirmDriverPanelOpen] = useState(false)
 
     const locationPanelRef = useRef(null)
     const locationPanelCloseIconRef = useRef(null)
     const vehiclePanelRef = useRef(null)
+    const confirmVehiclePanelRef = useRef(null)
+    const lookingDriverPanelRef = useRef(null)
+    const confirmDriverPanelRef = useRef(null)
 
 
     const submitHandler = () =>
@@ -72,6 +79,59 @@ const UserHome = () =>
           }        
       }, [vehiclePanelOpen])
 
+    useGSAP(() =>
+      {
+        if(confirmVehiclePanelOpen)
+          {
+            gsap.to(confirmVehiclePanelRef.current,
+              {
+                transform : 'translateY(0)'
+              })
+          }
+        else
+          {
+            gsap.to(confirmVehiclePanelRef.current,
+              {
+                transform : 'translateY(100%)'
+              })
+          }        
+      }, [confirmVehiclePanelOpen])
+
+    useGSAP(() =>
+      {
+        if(lookingDriverPanelOpen)
+          {
+            gsap.to(lookingDriverPanelRef.current,
+              {
+                transform : 'translateY(0)'
+              })
+          }
+        else
+          {
+            gsap.to(lookingDriverPanelRef.current,
+              {
+                transform : 'translateY(100%)'
+              })
+          }        
+      }, [lookingDriverPanelOpen])
+
+    useGSAP(() =>
+      {
+        if(confirmDriverPanelOpen)
+          {
+            gsap.to(confirmDriverPanelRef.current,
+              {
+                transform : 'translateY(0)'
+              })
+          }
+        else
+          {
+            gsap.to(confirmDriverPanelRef.current,
+              {
+                transform : 'translateY(100%)'
+              })
+          }        
+      }, [confirmDriverPanelOpen])
     return (
       <div className='h-screen relative overflow-hidden'>
         <img className='w-16 ml-5 mt-5 absolute' src={userLogo} alt="Uber Logo" />
@@ -124,50 +184,27 @@ const UserHome = () =>
                   }} />
             </form>
           </div>
+
           <div ref={locationPanelRef} className='bg-white h-0'>
             <LocationSearchPanel setLocationPanelOpen={setLocationPanelOpen} setVehiclePanelOpen={setVehiclePanelOpen} />
           </div>
+
         </div>
 
         <div ref={vehiclePanelRef} className='bg-white w-full p-6 fixed z-10 bottom-0 translate-y-full'>
-          <h5
-            onClick={() =>
-              {
-                setVehiclePanelOpen(false)
-              }}
-              className='ri-arrow-down-wide-line absolute right-6 text-2xl'>
-          </h5>
-          <h3 className='text-2xl font-semibold mb-5'>Choose a Vehicle</h3>
+          <VehiclePanel setVehiclePanelOpen={setVehiclePanelOpen} setConfirmVehiclePanelOpen={setConfirmVehiclePanelOpen} />
+        </div>
 
-          <div className='w-full p-2 mb-2 flex items-center justify-between border-2 active:border-black rounded-xl'>
-            <img className='h-12' src={carImg} alt="Car Image" />
-            <div className='w-1/2'>
-              <h4 className='font-medium text-base'>UberGo <i className='ri-user-3-fill'>4</i></h4>
-              <h5 className='font-medium text-sm'>2 mins away</h5>
-              <p className='font-normal text-xs text-gray-600'>Affordable, compact rides</p>
-            </div>
-            <h2 className='text-lg font-semibold'>Rs 190</h2>
-          </div>
+        <div ref={confirmVehiclePanelRef} className='bg-white w-full p-6 fixed z-10 bottom-0 translate-y-full'>
+          <ConfirmVehicle setConfirmVehiclePanelOpen={setConfirmVehiclePanelOpen} setLookingDriverPanelOpen={setLookingDriverPanelOpen} />
+        </div>
 
-          <div className='w-full p-2 mb-2 flex items-center justify-between border-2 active:border-black rounded-xl'>
-            <img className='h-12' src={bikeImg} alt="Bike Image" />
-            <div className='w-1/2'>
-              <h4 className='font-medium text-base'>UberMoto <i className='ri-user-3-fill'>1</i></h4>
-              <h5 className='font-medium text-sm'>3 mins away</h5>
-              <p className='font-normal text-xs text-gray-600'>Affordable motorcycle rides</p>
-            </div>
-            <h2 className='text-lg font-semibold'>Rs 70</h2>
-          </div>
+        <div ref={lookingDriverPanelRef} className='bg-white w-full p-6 fixed z-10 bottom-0 translate-y-full'>
+          <LookingDriver setLookingDriverPanelOpen={setLookingDriverPanelOpen} setConfirmDriverPanelOpen={setConfirmDriverPanelOpen} />
+        </div>
 
-          <div className='w-full p-2 mb-2 flex items-center justify-between border-2 active:border-black rounded-xl'>
-            <img className='h-12' src={autoImg} alt="Auto Image" />
-            <div className='w-1/2'>
-              <h4 className='font-medium text-base'>UberAuto <i className='ri-user-3-fill'>3</i></h4>
-              <h5 className='font-medium text-sm'>1 mins away</h5>
-              <p className='font-normal text-xs text-gray-600'>Affordable Rickshaw rides</p>
-            </div>
-            <h2 className='text-lg font-semibold'>Rs 100</h2>
-          </div>
+        <div ref={confirmDriverPanelRef} className='bg-white w-full p-6 fixed z-10 bottom-0 translate-y-full'>
+          <ConfirmDriver setConfirmDriverPanelOpen={setConfirmDriverPanelOpen}  />
         </div>
 
       </div>
