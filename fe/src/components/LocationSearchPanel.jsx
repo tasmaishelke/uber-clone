@@ -25,7 +25,7 @@ const LocationSearchPanel = (props) =>
                   }} 
                   key={index}
                   className='flex gap-4 items-center p-2 my-2 justify-start border-2 active:border-black rounded-xl'>
-                <h2 className='ri-map-pin-fill bg-[#eee] h-6 w-6 flex items-center justify-center rounded-full'></h2>
+                <h2 className='bg-[#eee] h-6 w-6 flex items-center justify-center rounded-full'><i className='ri-map-pin-fill'></i></h2>
                 <h4 className='font-medium text-sm'>{element}</h4>
                 </div>)
             })

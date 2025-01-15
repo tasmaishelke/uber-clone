@@ -7,6 +7,7 @@ import UserRegister from './pages/UserRegister';
 import UserLogin from './pages/UserLogin';
 import UserProtectWrapper from './pages/UserProtectWrapper'
 import UserHome from './pages/UserHome';
+import UserRiding from './pages/UserRiding';
 import UserLogout from './pages/UserLogout';
 
 import CaptainRegister from './pages/CaptainRegister';
@@ -25,6 +26,7 @@ const App = () => {
         <Route path='/user/register' element={<UserRegister />} />
         <Route path='/user/login' element={<UserLogin />} />
         <Route path='/user/home' element={<UserProtectWrapper> <UserHome /> </UserProtectWrapper>} />
+        <Route path='/user/riding' element={<UserRiding />} />
         <Route path='/user/logout' element={<UserProtectWrapper> <UserLogout /> </UserProtectWrapper>} />
 
         <Route path='/captain/register' element={<CaptainRegister />} />
