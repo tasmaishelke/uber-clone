@@ -12,7 +12,7 @@ const blacklistTokenSchema = new mongoose.Schema(
             {
                 type : Date,
                 default : Date.now,
-                expires : 86400, //this can be included in constant - this should be checked in token expiry i.e same amount
+                expires : process.env.BL_TOKEN_LIFETIME, //this can be included in constant - this should be checked in token expiry i.e same amount
             },
         
     });
