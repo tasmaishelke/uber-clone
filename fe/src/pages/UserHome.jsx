@@ -134,7 +134,7 @@ const UserHome = () =>
       }, [confirmDriverPanelOpen])
     return (
       <div className='h-screen relative overflow-hidden'>
-        <img className='w-16 ml-5 mt-5 absolute' src={userLogo} alt="Uber Logo" />
+        <img className='absolute w-16 ml-5 mt-5' src={userLogo} alt="Uber Logo" />
 
         <div className='h-screen w-screen'>
           <img className='h-full w-full object-cover' src="https://www.hanbit.co.kr/data/editor/20210429161116_qvzgnfvw.gif" alt="" />      

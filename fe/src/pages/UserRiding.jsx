@@ -1,5 +1,7 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
+
+import userLogo from '../assets/user.png'
 import carImg from '../assets/carImg.png'
 
 
@@ -7,6 +9,7 @@ const UserRiding = () =>
   {
     return (
       <div className='h-screen'>
+        <img className='absolute w-16 ml-5 mt-5' src={userLogo} alt="Uber Logo" />
         <Link to='/user/home' className='bg-white fixed flex items-center justify-center right-2 top-2 h-10 w-10 rounded-full'>
           <i className='ri-home-5-line text-lg'></i>
         </Link>
