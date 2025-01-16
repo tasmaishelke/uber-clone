@@ -1,14 +1,14 @@
 import React from 'react'
 import profilePhoto from '../assets/profilePhoto.jpg'
 
-const RidePopUp = () => 
+const RidePopUp = (props) => 
   {
     return (
       <div>
         <h5
           onClick={() =>
             {
-
+              props.setRidePopUpPanel(false)
             }}
           className='ri-arrow-down-wide-line absolute right-6 text-2xl'>
         </h5>
@@ -57,7 +57,7 @@ const RidePopUp = () =>
           <button 
             onClick={() =>
               {
-                
+                props.setRidePopUpPanel(false)                
               }}
             className='bg-gray-300 text-black w-full mt-2 font-semibold p-2 rounded-lg'>
             Ignore Ride

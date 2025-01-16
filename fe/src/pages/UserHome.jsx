@@ -21,7 +21,7 @@ const UserHome = () =>
     const [confirmDriverPanel, setConfirmDriverPanel] = useState(false)
 
     const locationSearchPanelRef = useRef(null)
-    const locationSearchPanelIconRef = useRef(null)
+    const locationSearchIconRef = useRef(null)
     const vehicleSelectPanelRef = useRef(null)
     const confirmVehiclePanelRef = useRef(null)
     const lookingDriverPanelRef = useRef(null)
@@ -42,7 +42,7 @@ const UserHome = () =>
                 height : '70%',
                 padding : 24
               })
-            gsap.to(locationSearchPanelIconRef.current,
+            gsap.to(locationSearchIconRef.current,
               {
                 opacity : 1
               })
@@ -54,7 +54,7 @@ const UserHome = () =>
                 height : '0%',
                 padding : 0
               })
-            gsap.to(locationSearchPanelIconRef.current,
+            gsap.to(locationSearchIconRef.current,
               {
                 opacity : 0
               })
@@ -144,7 +144,7 @@ const UserHome = () =>
         <div className='flex flex-col justify-end h-screen absolute top-0 w-full'>
           <div className='bg-white relative p-6 h-[30%] rounded-t'>
             <h5
-              ref={locationSearchPanelIconRef}
+              ref={locationSearchIconRef}
               onClick={() =>
                 {
                   setLocationSearchPanel(false)

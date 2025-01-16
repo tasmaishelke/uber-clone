@@ -9,25 +9,27 @@ import captainLogo from '../assets/captain.jpg'
 
 const CaptainHome = () => 
   {
-    const [ridePopUpPanelOpen, setRidePopUpPanelOpen] = useState(false)
+    const [ridePopUpPanel, setRidePopUpPanel] = useState(true)
 
-    // useGSAP(() =>
-    //   {
-    //     if(ridePopUpPanelOpen)
-    //       {
-    //         gsap.to(confirmDriverPanelRef.current,
-    //           {
-    //             transform : 'translateY(0)'
-    //           })
-    //       }
-    //     else
-    //       {
-    //         gsap.to(confirmDriverPanelRef.current,
-    //           {
-    //             transform : 'translateY(100%)'
-    //           })
-    //       }        
-    //   }, [ridePopUpPanelOpen])
+    const ridePopUpPanelRef = useRef(null)
+
+    useGSAP(() =>
+      {
+        if(ridePopUpPanel)
+          {
+            gsap.to(ridePopUpPanelRef.current,
+              {
+                transform : 'translateY(0)'
+              })
+          }
+        else
+          {
+            gsap.to(ridePopUpPanelRef.current,
+              {
+                transform : 'translateY(100%)'
+              })
+          }        
+      }, [ridePopUpPanel])
 
     return (
       <div className='h-screen'>
@@ -46,8 +48,8 @@ const CaptainHome = () =>
           <CaptainDetails />          
         </div>
 
-        <div  className='bg-white w-full p-6 fixed z-10 bottom-0 '>
-          <RidePopUp />
+        <div ref={ridePopUpPanelRef} className='bg-white w-full p-6 fixed z-10 bottom-0 translate-y-full'>
+          <RidePopUp setRidePopUpPanel={setRidePopUpPanel} />
         </div>
       </div>
     )
