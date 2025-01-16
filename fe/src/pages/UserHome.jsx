@@ -152,7 +152,8 @@ const UserHome = () =>
               className='ri-arrow-down-wide-line absolute opacity-0 right-6 text-2xl'>
             </h5>
             <h4 className='text-3xl font-semibold'>Find a trip</h4>
-            <div className='bg-gray-600 absolute h-16 w-1 top-24 left-10 rounded-full'></div>
+            <div className='bg-black absolute h-16 w-1 top-24 right-10 rounded-full'>
+            </div>
             <form onSubmit={(e) =>
               {
                 submitHandler(e)
