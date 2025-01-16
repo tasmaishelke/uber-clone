@@ -9,7 +9,7 @@ const ConfirmVehicle = (props) =>
         <h5
           onClick={() =>
             {
-              props.setConfirmVehiclePanelOpen(false)
+              props.setConfirmVehiclePanel(false)
             }}
           className='ri-arrow-down-wide-line absolute right-6 text-2xl'>
         </h5>
@@ -45,13 +45,13 @@ const ConfirmVehicle = (props) =>
           <button 
             onClick={() =>
               {
-                props.setLookingDriverPanelOpen(true)
-                props.setConfirmVehiclePanelOpen(false)
+                props.setLookingDriverPanel(true)
+                props.setConfirmVehiclePanel(false)
               }}
-            className='bg-green-600 text-white w-full mt-5 font-semibold p-2 rounded-lg'>
+            className='bg-green-600 text-white w-full mt-4 font-semibold p-2 rounded-lg'>
             Confirm Vehicle
           </button>
-        </div>        
+        </div>
       </div>
     )
   }

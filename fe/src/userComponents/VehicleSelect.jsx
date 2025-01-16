@@ -10,7 +10,7 @@ const VehiclePanel = (props) =>
         <h5
           onClick={() =>
             {
-              props.setVehiclePanelOpen(false)
+              props.setVehicleSelectPanel(false)
             }}
           className='ri-arrow-down-wide-line absolute right-6 text-2xl'>
         </h5>
@@ -19,7 +19,7 @@ const VehiclePanel = (props) =>
         <div 
           onClick={() =>
             {
-              props.setConfirmVehiclePanelOpen(true)                
+              props.setConfirmVehiclePanel(true)                
             }}
           className='w-full p-2 mb-2 flex items-center justify-between border-2 active:border-black rounded-xl'>
           <img className='h-12' src={carImg} alt="Car Image" />
@@ -34,7 +34,7 @@ const VehiclePanel = (props) =>
         <div
           onClick={() =>
             {
-              props.setConfirmVehiclePanelOpen(true)                
+              props.setConfirmVehiclePanel(true)                
             }} 
           className='w-full p-2 mb-2 flex items-center justify-between border-2 active:border-black rounded-xl'>
           <img className='h-12' src={bikeImg} alt="Bike Image" />
@@ -49,7 +49,7 @@ const VehiclePanel = (props) =>
         <div
           onClick={() =>
             {
-              props.setConfirmVehiclePanelOpen(true)                
+              props.setConfirmVehiclePanel(true)                
             }} 
           className='w-full p-2 mb-2 flex items-center justify-between border-2 active:border-black rounded-xl'>
           <img className='h-12' src={autoImg} alt="Auto Image" />

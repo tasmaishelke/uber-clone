@@ -8,7 +8,7 @@ const LookingDriver = (props) =>
         <h5
           onClick={() =>
             {
-              props.setLookingDriverPanelOpen(false)
+              props.setLookingDriverPanel(false)
             }}
             className='ri-arrow-down-wide-line absolute right-6 text-2xl'>
         </h5>
@@ -42,7 +42,7 @@ const LookingDriver = (props) =>
             </div>
           </div>
         </div>
-        <button onClick={()=>{props.setLookingDriverPanelOpen(false); props.setConfirmDriverPanelOpen(true)}}> confirm driver</button>
+        <button onClick={()=>{props.setLookingDriverPanel(false); props.setConfirmDriverPanel(true)}}> confirm driver</button>
       </div>
     )
   }

@@ -1,6 +1,6 @@
 import React from 'react'
 
-const LocationSearchPanel = (props) => 
+const LocationSearch = (props) => 
   {
     // sample array for location
     const location = 
@@ -20,8 +20,8 @@ const LocationSearchPanel = (props) =>
               return(
                 <div onClick={() =>
                   {
-                    props.setVehiclePanelOpen(true)
-                    props.setLocationPanelOpen(false)
+                    props.setVehicleSelectPanel(true)
+                    props.setLocationSearchPanel(false)
                   }} 
                   key={index}
                   className='flex gap-4 items-center p-2 my-2 justify-start border-2 active:border-black rounded-xl'>
@@ -34,4 +34,4 @@ const LocationSearchPanel = (props) =>
     )
   }
 
-export default LocationSearchPanel
+export default LocationSearch

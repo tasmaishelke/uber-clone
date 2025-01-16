@@ -1,11 +1,11 @@
 import React, {useRef, useState} from 'react'
 import gsap from 'gsap'
 import { useGSAP } from '@gsap/react'
-import LocationSearchPanel from '../components/LocationSearchPanel'
-import VehiclePanel from '../components/VehiclePanel'
-import ConfirmVehicle from '../components/ConfirmVehicle'
-import LookingDriver from '../components/LookingDriver'
-import ConfirmDriver from '../components/ConfirmDriver'
+import LocationSearch from '../userComponents/LocationSearch'
+import VehicleSelect from '../userComponents/VehicleSelect'
+import ConfirmVehicle from '../userComponents/ConfirmVehicle'
+import LookingDriver from '../userComponents/LookingDriver'
+import ConfirmDriver from '../userComponents/ConfirmDriver'
 
 import userLogo from '../assets/user.png'
 
@@ -14,15 +14,15 @@ const UserHome = () =>
   {
     const [pickup, setPickup] = useState('')
     const [destination, setDestination] = useState('')
-    const [locationPanelOpen, setLocationPanelOpen] = useState(false)
-    const [vehiclePanelOpen, setVehiclePanelOpen] = useState(false)
-    const [confirmVehiclePanelOpen, setConfirmVehiclePanelOpen] = useState(false)
-    const [lookingDriverPanelOpen, setLookingDriverPanelOpen] = useState(false)
-    const [confirmDriverPanelOpen, setConfirmDriverPanelOpen] = useState(false)
+    const [locationSearchPanel, setLocationSearchPanel] = useState(false)
+    const [vehicleSelectPanel, setVehicleSelectPanel] = useState(false)
+    const [confirmVehiclePanel, setConfirmVehiclePanel] = useState(false)
+    const [lookingDriverPanel, setLookingDriverPanel] = useState(false)
+    const [confirmDriverPanel, setConfirmDriverPanel] = useState(false)
 
-    const locationPanelRef = useRef(null)
-    const locationPanelCloseIconRef = useRef(null)
-    const vehiclePanelRef = useRef(null)
+    const locationSearchPanelRef = useRef(null)
+    const locationSearchPanelIconRef = useRef(null)
+    const vehicleSelectPanelRef = useRef(null)
     const confirmVehiclePanelRef = useRef(null)
     const lookingDriverPanelRef = useRef(null)
     const confirmDriverPanelRef = useRef(null)
@@ -35,53 +35,53 @@ const UserHome = () =>
 
     useGSAP(() =>
       {
-        if(locationPanelOpen)
+        if(locationSearchPanel)
           {
-            gsap.to(locationPanelRef.current,
+            gsap.to(locationSearchPanelRef.current,
               {
                 height : '70%',
                 padding : 24
               })
-            gsap.to(locationPanelCloseIconRef.current,
+            gsap.to(locationSearchPanelIconRef.current,
               {
                 opacity : 1
               })
           }
         else
           {
-            gsap.to(locationPanelRef.current,
+            gsap.to(locationSearchPanelRef.current,
               {
                 height : '0%',
                 padding : 0
               })
-            gsap.to(locationPanelCloseIconRef.current,
+            gsap.to(locationSearchPanelIconRef.current,
               {
                 opacity : 0
               })
           }
-      }, [locationPanelOpen])
+      }, [locationSearchPanel])
 
     useGSAP(() =>
       {
-        if(vehiclePanelOpen)
+        if(vehicleSelectPanel)
           {
-            gsap.to(vehiclePanelRef.current,
+            gsap.to(vehicleSelectPanelRef.current,
               {
                 transform : 'translateY(0)'
               })
           }
         else
           {
-            gsap.to(vehiclePanelRef.current,
+            gsap.to(vehicleSelectPanelRef.current,
               {
                 transform : 'translateY(100%)'
               })
           }        
-      }, [vehiclePanelOpen])
+      }, [vehicleSelectPanel])
 
     useGSAP(() =>
       {
-        if(confirmVehiclePanelOpen)
+        if(confirmVehiclePanel)
           {
             gsap.to(confirmVehiclePanelRef.current,
               {
@@ -95,11 +95,11 @@ const UserHome = () =>
                 transform : 'translateY(100%)'
               })
           }        
-      }, [confirmVehiclePanelOpen])
+      }, [confirmVehiclePanel])
 
     useGSAP(() =>
       {
-        if(lookingDriverPanelOpen)
+        if(lookingDriverPanel)
           {
             gsap.to(lookingDriverPanelRef.current,
               {
@@ -113,11 +113,11 @@ const UserHome = () =>
                 transform : 'translateY(100%)'
               })
           }        
-      }, [lookingDriverPanelOpen])
+      }, [lookingDriverPanel])
 
     useGSAP(() =>
       {
-        if(confirmDriverPanelOpen)
+        if(confirmDriverPanel)
           {
             gsap.to(confirmDriverPanelRef.current,
               {
@@ -131,7 +131,8 @@ const UserHome = () =>
                 transform : 'translateY(100%)'
               })
           }        
-      }, [confirmDriverPanelOpen])
+      }, [confirmDriverPanel])
+      
     return (
       <div className='h-screen relative overflow-hidden'>
         <img className='absolute w-16 ml-5 mt-5' src={userLogo} alt="Uber Logo" />
@@ -143,10 +144,10 @@ const UserHome = () =>
         <div className='flex flex-col justify-end h-screen absolute top-0 w-full'>
           <div className='bg-white relative p-6 h-[30%] rounded-t'>
             <h5
-              ref={locationPanelCloseIconRef}
+              ref={locationSearchPanelIconRef}
               onClick={() =>
                 {
-                  setLocationPanelOpen(false)
+                  setLocationSearchPanel(false)
                 }}
               className='ri-arrow-down-wide-line absolute opacity-0 right-6 text-2xl'>
             </h5>
@@ -159,7 +160,7 @@ const UserHome = () =>
               <input 
                 onClick={() =>
                 {
-                  setLocationPanelOpen(true)
+                  setLocationSearchPanel(true)
                 }}
                 className='bg-[#eee] w-full px-8 py-2 mt-6 text-base placeholder:text-base rounded-lg' 
                 type="text" 
@@ -172,7 +173,7 @@ const UserHome = () =>
               <input
                 onClick={() =>
                   {
-                    setLocationPanelOpen(true)
+                    setLocationSearchPanel(true)
                   }}
                 className='bg-[#eee] w-full px-8 py-2 mt-3 text-base placeholder:text-base rounded-lg' 
                 type="text" 
@@ -185,26 +186,25 @@ const UserHome = () =>
             </form>
           </div>
 
-          <div ref={locationPanelRef} className='bg-white h-0'>
-            <LocationSearchPanel setLocationPanelOpen={setLocationPanelOpen} setVehiclePanelOpen={setVehiclePanelOpen} />
+          <div ref={locationSearchPanelRef} className='bg-white h-0'>
+            <LocationSearch setLocationSearchPanel={setLocationSearchPanel} setVehicleSelectPanel={setVehicleSelectPanel} />
           </div>
-
         </div>
 
-        <div ref={vehiclePanelRef} className='bg-white w-full p-6 fixed z-10 bottom-0 translate-y-full'>
-          <VehiclePanel setVehiclePanelOpen={setVehiclePanelOpen} setConfirmVehiclePanelOpen={setConfirmVehiclePanelOpen} />
+        <div ref={vehicleSelectPanelRef} className='bg-white w-full p-6 fixed z-10 bottom-0 translate-y-full'>
+          <VehicleSelect setVehicleSelectPanel={setVehicleSelectPanel} setConfirmVehiclePanel={setConfirmVehiclePanel} />
         </div>
 
         <div ref={confirmVehiclePanelRef} className='bg-white w-full p-6 fixed z-10 bottom-0 translate-y-full'>
-          <ConfirmVehicle setConfirmVehiclePanelOpen={setConfirmVehiclePanelOpen} setLookingDriverPanelOpen={setLookingDriverPanelOpen} />
+          <ConfirmVehicle setConfirmVehiclePanel={setConfirmVehiclePanel} setLookingDriverPanel={setLookingDriverPanel} />
         </div>
 
         <div ref={lookingDriverPanelRef} className='bg-white w-full p-6 fixed z-10 bottom-0 translate-y-full'>
-          <LookingDriver setLookingDriverPanelOpen={setLookingDriverPanelOpen} setConfirmDriverPanelOpen={setConfirmDriverPanelOpen} />
+          <LookingDriver setLookingDriverPanel={setLookingDriverPanel} setConfirmDriverPanel={setConfirmDriverPanel} />
         </div>
 
         <div ref={confirmDriverPanelRef} className='bg-white w-full p-6 fixed z-10 bottom-0 translate-y-full'>
-          <ConfirmDriver setConfirmDriverPanelOpen={setConfirmDriverPanelOpen}  />
+          <ConfirmDriver setConfirmDriverPanel={setConfirmDriverPanel}  />
         </div>
 
       </div>

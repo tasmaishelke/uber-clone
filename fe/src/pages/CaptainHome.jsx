@@ -1,53 +1,53 @@
-import React from 'react'
+import React, {useRef, useState} from 'react'
+import gsap from 'gsap'
+import { useGSAP } from '@gsap/react'
 import { Link } from 'react-router-dom'
+import CaptainDetails from '../captainComponents/CaptainDetails'
+import RidePopUp from '../captainComponents/RidePopUp'
 
 import captainLogo from '../assets/captain.jpg'
-import carImg from '../assets/carImg.png'
 
 const CaptainHome = () => 
   {
+    const [ridePopUpPanelOpen, setRidePopUpPanelOpen] = useState(false)
+
+    // useGSAP(() =>
+    //   {
+    //     if(ridePopUpPanelOpen)
+    //       {
+    //         gsap.to(confirmDriverPanelRef.current,
+    //           {
+    //             transform : 'translateY(0)'
+    //           })
+    //       }
+    //     else
+    //       {
+    //         gsap.to(confirmDriverPanelRef.current,
+    //           {
+    //             transform : 'translateY(100%)'
+    //           })
+    //       }        
+    //   }, [ridePopUpPanelOpen])
+
     return (
       <div className='h-screen'>
-        <img className='absolute w-16 ml-5 mt-5' src={captainLogo} alt="Uber Logo" />
-        <Link to='/captain/login' className='bg-white fixed flex items-center justify-center right-2 top-2 h-10 w-10 rounded-full'>
-          <i className='ri-home-5-line text-lg'></i>
-        </Link>
-        <div className='h-1/2'>
+        <div>
+          <img className='absolute w-16 ml-5 mt-5' src={captainLogo} alt="Uber Logo" />
+          <Link to='/captain/login' className='bg-white fixed flex items-center justify-center right-2 top-2 h-10 w-10 rounded-full'>
+            <i className='ri-logout-box-r-line text-lg'></i>
+          </Link>
+        </div>
+
+        <div className='h-3/5'>
           <img className='h-full w-full object-cover' src="https://www.hanbit.co.kr/data/editor/20210429161116_qvzgnfvw.gif" alt="" />
         </div>
-        <div className='h-1/2 p-6'>
-          <div className='flex items-center justify-between'>
-            <img className='h-12' src={carImg} alt="Car Image" />
-            <div className='text-right'>
-              <h2 className='text-lg font-medium'>Tasmai</h2>
-              <h4 className='text-xl font-semibold -mt-1 -mb-1'>mh 43 n 6891</h4>
-              <p className='text-gray-600 text-sm'>Maruti suzuki alto</p>
-            </div>
-          </div>
-          <div className='flex gap-2 flex-col justify-between items-center'>
-            <div className='w-full mt-5'>
-        
-              <div className='flex items-center gap-5 p-2 border-b-2'>
-                <i className='ri-map-pin-2-fill text-2xl'></i>
-                <div>
-                  <h3 className='text-lg font-medium'>562/11a</h3>
-                  <p className='text-gray-600 text-sm -mt-1'>Dombivli, mumbai</p>
-                </div>
-              </div>
-      
-              <div className='flex items-center gap-5 p-2'>
-                <i className='ri-currency-line text-2xl'></i>
-                  <div>
-                    <h3 className='text-lg font-medium'>Rs 190</h3>
-                    <p className='text-gray-600 text-sm -mt-1'>Cash</p>
-                  </div>
-              </div>
-            </div>
-          </div>
-          <button 
-            className='bg-green-600 text-white w-full mt-5 font-semibold p-2 rounded-lg'>
-            Make a Payment
-          </button>
+
+        <div className='h-2/5 p-6'>
+          <CaptainDetails />          
+        </div>
+
+        <div  className='bg-white w-full p-6 fixed z-10 bottom-0 '>
+          <RidePopUp />
         </div>
       </div>
     )

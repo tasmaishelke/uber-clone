@@ -9,7 +9,7 @@ const ConfirmDriver = (props) =>
         <h5
           onClick={() =>
             {
-                props.setConfirmDriverPanelOpen(false)
+                props.setConfirmDriverPanel(false)
             }}
             className='ri-arrow-down-wide-line -mt-6 text-center text-2xl'>
         </h5>
