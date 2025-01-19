@@ -18,12 +18,15 @@ const CaptainLogout = () =>
         .then((res) =>
             {
                 if(res.status==200)
-                localStorage.removeItem('token')
+                    {
+                        localStorage.removeItem('token')
+                        navigate('/captain/login')
+                    }
             })
     useEffect(()=>
         {
             navigate('/captain/login')
-        })
+        }, [token])
 
     return (
         <div></div>

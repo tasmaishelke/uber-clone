@@ -18,7 +18,10 @@ const UserLogout = () =>
         .then((res) =>
             {
                 if(res.status==200)
-                localStorage.removeItem('token')                
+                    {
+                        localStorage.removeItem('token')
+                        navigate('/user/login')
+                    }
             })
     useEffect(()=>
         {
