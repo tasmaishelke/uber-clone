@@ -5,28 +5,28 @@ import axios from 'axios'
 
 const UserLogout = () => 
   {    
-    const navigate = useNavigate()
+    const navigate = useNavigate();
     const token = localStorage.getItem('token')
-    axios
-        .get(`${import.meta.env.VITE_BASE_URL}/user/logout`, 
-            {
-                headers : 
-                    {
-                        Authorization : `Bearer ${token}`
-                    }
-            })
-        .then((res) =>
-            {
-                if(res.status==200)
-                    {
-                        localStorage.removeItem('token')
-                        navigate('/user/login')
-                    }
-            })
+    
     useEffect(()=>
         {
-            navigate('/user/login')
-        })
+            axios
+                .get(`${import.meta.env.VITE_BASE_URL}/user/logout`, 
+                    {
+                        headers : 
+                            {
+                                Authorization : `Bearer ${token}`
+                            }
+                    })
+                .then((res) =>
+                    {
+                        if(res.status==200)
+                            {
+                                localStorage.removeItem('token')
+                                navigate('/user/login')
+                            } 
+                    })
+        }, [token])
 
     // const logout = async() =>
     //     {

@@ -11,7 +11,7 @@ const CaptainLogin = () =>
     const [password, setPassword] = useState('')
 
     const navigate = useNavigate()    
-    const { captain, setCaptain } = useContext(CaptainDataContext)
+    const { setCaptain } = useContext(CaptainDataContext)
 
     const submitHandler = async(e) =>
       {

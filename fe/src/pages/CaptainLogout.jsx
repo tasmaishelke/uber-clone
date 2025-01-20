@@ -7,25 +7,25 @@ const CaptainLogout = () =>
   {
     const navigate = useNavigate();
     const token = localStorage.getItem('token')
-    axios
-        .get(`${import.meta.env.VITE_BASE_URL}/captain/logout`,
-            {
-                headers : 
-                    {
-                        Authorization : `Bearer ${token}`
-                    }
-            })
-        .then((res) =>
-            {
-                if(res.status==200)
-                    {
-                        localStorage.removeItem('token')
-                        navigate('/captain/login')
-                    }
-            })
+    
     useEffect(()=>
         {
-            navigate('/captain/login')
+            axios
+                .get(`${import.meta.env.VITE_BASE_URL}/captain/logout`,
+                    {
+                        headers : 
+                            {
+                                Authorization : `Bearer ${token}`
+                            }
+                    })
+                .then((res) =>
+                    {
+                        if(res.status==200)
+                            {
+                                localStorage.removeItem('token')
+                                navigate('/captain/login')
+                            }
+                    })
         }, [token])
 
     return (
