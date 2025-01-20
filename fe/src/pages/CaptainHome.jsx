@@ -1,7 +1,8 @@
-import React, {useRef, useState} from 'react'
+import React, { useRef, useState } from 'react'
+import { Link } from 'react-router-dom'
 import gsap from 'gsap'
 import { useGSAP } from '@gsap/react'
-import { Link } from 'react-router-dom'
+
 import CaptainDetails from '../captainComponents/CaptainDetails'
 import RidePopUp from '../captainComponents/RidePopUp'
 import ConfirmRidePopUp from '../captainComponents/ConfirmRidePopUp'
@@ -56,7 +57,7 @@ const CaptainHome = () =>
       <div className='h-screen'>
         <div>
           <img className='absolute w-16 ml-5 mt-5' src={captainLogo} alt="Uber Logo" />
-          <Link to='/captain/login' className='bg-white fixed flex items-center justify-center right-2 top-2 h-10 w-10 rounded-full'>
+          <Link to='/captain/logout' className='bg-white fixed flex items-center justify-center right-2 top-2 h-10 w-10 rounded-full'>
             <i className='ri-logout-box-r-line text-lg'></i>
           </Link>
         </div>

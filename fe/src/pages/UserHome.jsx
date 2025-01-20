@@ -1,6 +1,8 @@
-import React, {useRef, useState} from 'react'
+import React, { useRef, useState } from 'react'
+import { Link } from 'react-router-dom'
 import gsap from 'gsap'
 import { useGSAP } from '@gsap/react'
+
 import LocationSearch from '../userComponents/LocationSearch'
 import VehicleSelect from '../userComponents/VehicleSelect'
 import ConfirmVehicle from '../userComponents/ConfirmVehicle'
@@ -28,7 +30,7 @@ const UserHome = () =>
     const confirmDriverPanelRef = useRef(null)
 
 
-    const submitHandler = () =>
+    const submitHandler = (e) =>
       {
         e.preventDefault()
       }
@@ -136,6 +138,9 @@ const UserHome = () =>
     return (
       <div className='h-screen relative overflow-hidden'>
         <img className='absolute w-16 ml-5 mt-5' src={userLogo} alt="Uber Logo" />
+        <Link to='/user/logout' className='bg-white fixed flex items-center justify-center right-2 top-2 h-10 w-10 rounded-full'>
+          <i className='ri-logout-box-r-line text-lg'></i>
+        </Link>
 
         <div className='h-screen w-screen'>
           <img className='h-full w-full object-cover' src="https://www.hanbit.co.kr/data/editor/20210429161116_qvzgnfvw.gif" alt="" />      
@@ -152,8 +157,6 @@ const UserHome = () =>
               className='ri-arrow-down-wide-line absolute opacity-0 right-6 text-2xl'>
             </h5>
             <h4 className='text-3xl font-semibold'>Find a trip</h4>
-            <div className='bg-black absolute h-16 w-1 top-24 right-10 rounded-full'>
-            </div>
             <form onSubmit={(e) =>
               {
                 submitHandler(e)
