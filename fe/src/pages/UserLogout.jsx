@@ -36,13 +36,14 @@ const UserLogout = () =>
     //             {
     //                 headers : 
     //                     {
-    //                         authorization : `Bearer ${token}`
+    //                         Authorization : `Bearer ${token}`
     //                     }
     //             })
     //         if(res.status==200)
     //             {
     //                 localStorage.removeItem('token')
     //                 navigate('/user/login')
+    //                 console.log("1");
     //             }
     //     }
     // logout()

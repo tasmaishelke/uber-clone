@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState } from 'react'
 
 const LocationSearch = (props) => 
   {
@@ -12,8 +12,51 @@ const LocationSearch = (props) =>
         "2b, Near niteen cafe, mumbai",
         "1b, Near viraj cafe, mumbai",
       ]
+
+    const [pickup, setPickup] = useState('')
+    const [destination, setDestination] = useState('')
+
+    const submitHandler = (e) =>
+      {
+        e.preventDefault()
+        console.log(pickup, destination);
+      }
+
     return (
       <div>
+        <div>
+          <h5
+            onClick={() =>
+              {
+                props.setLocationSearchPanel(false)
+              }}
+            className='ri-arrow-down-wide-line absolute right-6 text-2xl'>
+          </h5>
+          <h4 className='text-3xl font-semibold'>Find a trip</h4>
+          <form onSubmit={(e) =>
+            {
+              submitHandler(e)
+            }}>
+            <input 
+              className='bg-[#eee] w-full px-8 py-2 mt-6 text-base placeholder:text-base rounded-lg' 
+              type="text" 
+              placeholder='Enter Pickup Location'
+              value={pickup}
+              onChange={(e) =>
+                {
+                  setPickup(e.target.value)
+                }} />
+            <input
+              className='bg-[#eee] w-full px-8 py-2 mt-3 text-base placeholder:text-base rounded-lg' 
+              type="text" 
+              placeholder='Enter Destination'
+              value={destination}
+              onChange={(e) =>
+                {
+                  setDestination(e.target.value)
+                }} />
+          </form>
+        </div>
         {
           location.map((element, index) =>
             {
