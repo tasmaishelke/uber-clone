@@ -7,6 +7,7 @@ const connectDb = require('./config/connectDb');
 const userRoutes = require('./routes/userRoutes')
 const captainRoutes = require('./routes/captainRoutes')
 const mapRoutes = require('./routes/mapRoutes')
+const rideRoutes = require('./routes/rideRoutes')
 
 
 //middleware
@@ -27,6 +28,7 @@ app.get('/', (req, res) =>
 app.use('/user', userRoutes);
 app.use('/captain', captainRoutes);
 app.use('/map', mapRoutes);
+app.use('/ride', rideRoutes);
 
 const start = async() =>
     {

@@ -44,22 +44,22 @@ router.post('/register',
             const hashedPassword = await captainSchema.hashPassword(password);
 
             const captainObject = 
-            {    
-                fullName : 
-                    {
-                        firstName : fullName.firstName,
-                        lastName : fullName.lastName,
-                    },                
-                email,
-                password : hashedPassword,
-                vehicle : 
-                    {
-                        color : vehicle.color,
-                        plate : vehicle.plate,
-                        capacity : vehicle.capacity,
-                        type: vehicle.type,
-                    }
-            }
+                {    
+                    fullName : 
+                        {
+                            firstName : fullName.firstName,
+                            lastName : fullName.lastName,
+                        },                
+                    email,
+                    password : hashedPassword,
+                    vehicle : 
+                        {
+                            color : vehicle.color,
+                            plate : vehicle.plate,
+                            capacity : vehicle.capacity,
+                            type: vehicle.type,
+                        }
+                }
             const captain = await captainSchema.create(captainObject)
             const token = await captain.generateAuthToken();
             if(captain)
@@ -107,13 +107,15 @@ router.post('/login',
             res.status(200).json({ token, captain})
         })
 
-router.get('/profile', authCaptain,
+router.get('/profile',
+    authCaptain,
     async(req, res, next) =>
         {
             res.status(200).json(req.captain);
         })
 
-router.get('/logout', authCaptain,
+router.get('/logout',
+    authCaptain,
     async(req, res, next) =>
         {
             const token = req.cookies.cookieToken || req.headers.authorization?.split(' ')[1];

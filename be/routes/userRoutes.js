@@ -113,13 +113,15 @@ router.post('/login',
             res.status(200).json({ token, user})
         })
 
-router.get('/profile', authUser,
+router.get('/profile',
+    authUser,
     async(req, res, next) =>
         {
             res.status(200).json(req.user);
         })
 
-router.get('/logout', authUser,
+router.get('/logout',
+    authUser,
     async(req, res, next) =>
         {
             const token = req.cookies.cookieToken || req.headers.authorization?.split(' ')[1];
