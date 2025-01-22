@@ -146,15 +146,15 @@ const UserHome = () =>
           <LocationSearch setLocationSearchPanel={setLocationSearchPanel} setVehicleSelectPanel={setVehicleSelectPanel} />
         </div>
 
-        <div ref={vehicleSelectPanelRef} className='bg-white h-3/5 w-full p-6 fixed z-10 bottom-0 translate-y-full'>
+        <div ref={vehicleSelectPanelRef} className='bg-white w-full p-6 fixed z-10 bottom-0 translate-y-full'>
           <VehicleSelect setVehicleSelectPanel={setVehicleSelectPanel} setConfirmVehiclePanel={setConfirmVehiclePanel} />
         </div>
 
-        <div ref={confirmVehiclePanelRef} className='bg-white h-3/5 w-full p-6 fixed z-10 bottom-0 translate-y-full'>
+        <div ref={confirmVehiclePanelRef} className='bg-white w-full p-6 fixed z-10 bottom-0 translate-y-full'>
           <ConfirmVehicle setConfirmVehiclePanel={setConfirmVehiclePanel} setLookingDriverPanel={setLookingDriverPanel} />
         </div>
 
-        <div ref={lookingDriverPanelRef} className='bg-white h-3/5 w-full p-6 fixed z-10 bottom-0 translate-y-full'>
+        <div ref={lookingDriverPanelRef} className='bg-white w-full p-6 fixed z-10 bottom-0 translate-y-full'>
           <LookingDriver setLookingDriverPanel={setLookingDriverPanel} setConfirmDriverPanel={setConfirmDriverPanel} />
         </div>
 
