@@ -11,8 +11,9 @@ const CaptainLogin = () =>
     const [password, setPassword] = useState('')
 
     const navigate = useNavigate()    
-    const { setCaptain } = useContext(CaptainDataContext)
-
+    const { setCaptainContext } = useContext(CaptainDataContext)
+    
+    
     const submitHandler = async(e) =>
       {
 
@@ -27,7 +28,7 @@ const CaptainLogin = () =>
         if(res.status==200)
           {
             const { captain, token } = res.data;
-            setCaptain(captain)
+            setCaptainContext(captain)
             localStorage.setItem('token', token)
             navigate('/captain/home')
 
@@ -41,7 +42,6 @@ const CaptainLogin = () =>
       <div className='h-screen flex justify-between flex-col w-full'>
         <img className='w-16 ml-6 mt-6' src={captainLogo} alt="Uber Logo" />
           <div className='p-6'>
-
             <form onSubmit={(e) =>
               {
                 submitHandler(e)

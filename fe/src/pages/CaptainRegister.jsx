@@ -18,7 +18,7 @@ const CaptainRegister = () =>
     const [ vehicleType, setVehicleType ] = useState('')
 
     const navigate = useNavigate();
-    const { setCaptain } = useContext(CaptainDataContext)
+    const { setCaptainContext } = useContext(CaptainDataContext)
 
     const submitHandler = async(e) =>
       {
@@ -45,7 +45,7 @@ const CaptainRegister = () =>
         if(res.status==201)
           {
             const { captain, token } = res.data
-            setCaptain(captain)
+            setCaptainContext(captain)
             localStorage.setItem('token', token)
             navigate('/captain/home')
           }

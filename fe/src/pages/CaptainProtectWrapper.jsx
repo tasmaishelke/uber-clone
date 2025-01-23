@@ -7,7 +7,7 @@ import axios from 'axios'
 const CaptainProtectWrapper = ({ children }) => 
   {
     const [isLoading, setIsLoading] = useState(true)
-    const { setCaptain } = useContext(CaptainDataContext)
+    const { setCaptainContext } = useContext(CaptainDataContext)
     const token = localStorage.getItem('token')    
     const navigate = useNavigate()
 
@@ -29,7 +29,7 @@ const CaptainProtectWrapper = ({ children }) =>
             {
               if(res.status==200)
                 {
-                  setCaptain(res.data.captain)
+                  setCaptainContext(res.data.captain)
                   setIsLoading(false)
                 }
             })

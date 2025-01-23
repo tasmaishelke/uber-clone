@@ -1,8 +1,11 @@
-import React from 'react'
+import React, { useContext } from 'react'
+import { CaptainDataContext } from '../context/CaptainContext'
+
 import profilePhoto from '../assets/profilePhoto.jpg'
 
 const CaptainDetails = () => 
   {
+    const { captainContext } = useContext(CaptainDataContext)
     return (
       <div>
         <div className='flex items-center justify-between'>

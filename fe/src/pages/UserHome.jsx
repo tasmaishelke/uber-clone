@@ -319,7 +319,7 @@ const UserHome = () =>
             setConfirmDriverPanel={setConfirmDriverPanel} />
         </div>
 
-        <div ref={confirmDriverPanelRef} className='bg-white h-screen w-full p-6 fixed z-10 bottom-0 translate-y-full'>
+        <div ref={confirmDriverPanelRef} className='bg-white w-full p-6 fixed z-10 bottom-0 translate-y-full'>
           <ConfirmDriver setConfirmDriverPanel={setConfirmDriverPanel}  />
         </div>
 

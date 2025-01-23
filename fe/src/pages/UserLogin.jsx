@@ -11,7 +11,7 @@ const UserLogin = () =>
     const [password, setPassword] = useState('')
 
     const navigate = useNavigate()
-    const { setUser } = useContext(UserDataContext)
+    const { setUserContext } = useContext(UserDataContext)
 
     const submitHandler = async(e) =>
       {
@@ -27,7 +27,7 @@ const UserLogin = () =>
         if(res.status==200)
           {
             const { user, token } = res.data
-            setUser(user)
+            setUserContext(user)
             localStorage.setItem('token', token)
             navigate('/user/home')
           }
