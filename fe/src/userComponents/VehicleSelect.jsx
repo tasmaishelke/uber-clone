@@ -19,7 +19,8 @@ const VehiclePanel = (props) =>
         <div 
           onClick={() =>
             {
-              props.setConfirmVehiclePanel(true)                
+              props.setConfirmVehiclePanel(true)
+              props.setVehicleType('car')
             }}
           className='w-full p-2 mb-2 flex items-center justify-between border-2 active:border-black rounded-xl'>
           <img className='h-12' src={carImg} alt="Car Image" />
@@ -28,13 +29,14 @@ const VehiclePanel = (props) =>
             <h5 className='font-medium text-sm'>2 mins away</h5>
             <p className='font-normal text-xs text-gray-600'>Affordable, compact rides</p>
           </div>
-          <h2 className='text-lg font-semibold'>Rs 190</h2>
+          <h2 className='text-lg font-semibold'>Rs {props.fare.car}</h2>
         </div>
 
         <div
           onClick={() =>
             {
-              props.setConfirmVehiclePanel(true)                
+              props.setConfirmVehiclePanel(true)
+              props.setVehicleType('motorcycle')
             }} 
           className='w-full p-2 mb-2 flex items-center justify-between border-2 active:border-black rounded-xl'>
           <img className='h-12' src={bikeImg} alt="Bike Image" />
@@ -43,13 +45,14 @@ const VehiclePanel = (props) =>
             <h5 className='font-medium text-sm'>3 mins away</h5>
             <p className='font-normal text-xs text-gray-600'>Affordable motorcycle rides</p>
           </div>
-          <h2 className='text-lg font-semibold'>Rs 70</h2>
+          <h2 className='text-lg font-semibold'>Rs {props.fare.motorcycle}</h2>
         </div>
 
         <div
           onClick={() =>
             {
-              props.setConfirmVehiclePanel(true)                
+              props.setConfirmVehiclePanel(true)
+              props.setVehicleType('auto')
             }} 
           className='w-full p-2 mb-2 flex items-center justify-between border-2 active:border-black rounded-xl'>
           <img className='h-12' src={autoImg} alt="Auto Image" />
@@ -58,7 +61,7 @@ const VehiclePanel = (props) =>
             <h5 className='font-medium text-sm'>1 mins away</h5>
             <p className='font-normal text-xs text-gray-600'>Affordable Rickshaw rides</p>
           </div>
-          <h2 className='text-lg font-semibold'>Rs 100</h2>
+          <h2 className='text-lg font-semibold'>Rs {props.fare.auto}</h2>
         </div>
       </div>
     )

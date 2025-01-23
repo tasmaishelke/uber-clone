@@ -2,6 +2,7 @@ import React, { useRef, useState } from 'react'
 import { Link } from 'react-router-dom'
 import gsap from 'gsap'
 import { useGSAP } from '@gsap/react'
+import axios from 'axios'
 
 import LocationSearch from '../userComponents/LocationSearch'
 import VehicleSelect from '../userComponents/VehicleSelect'
@@ -14,12 +15,20 @@ import userLogo from '../assets/user.png'
 
 const UserHome = () => 
   {
-    
+    const [origin, setOrigin] = useState('')
+    const [destination, setDestination] = useState('')
+
     const [locationSearchPanel, setLocationSearchPanel] = useState(false)
     const [vehicleSelectPanel, setVehicleSelectPanel] = useState(false)
     const [confirmVehiclePanel, setConfirmVehiclePanel] = useState(false)
     const [lookingDriverPanel, setLookingDriverPanel] = useState(false)
     const [confirmDriverPanel, setConfirmDriverPanel] = useState(false)
+
+    const [originSuggestion, setOriginSuggestion] = useState([])
+    const [destinationSuggestion, setDestinationSuggestion] = useState([])
+    const [activeField, setActiveField] = useState(null)
+    const [fare, setFare] = useState({})
+    const [vehicleType, setVehicleType] = useState(null)
 
     const locationSearchPanelRef = useRef(null)
     const vehicleSelectPanelRef = useRef(null)
@@ -119,6 +128,97 @@ const UserHome = () =>
           }        
       }, [confirmDriverPanel])
       
+    const handleOriginChange = async(e) =>
+      {
+        setOrigin(e.target.value)
+        try 
+          {
+            const res = await axios.get(`${import.meta.env.VITE_BASE_URL}/map/get-suggestion`,
+              {
+                params : 
+                  {
+                    input : e.target.value
+                  },
+                headers : 
+                  {
+                    Authorization : `Bearer ${localStorage.getItem('token')}`
+                  }
+              })
+            setOriginSuggestion(res.data)
+          }
+        catch(error)
+          {
+            console.log(error);            
+            // throw new Error("Failed to fetch suggestions. Please try again later.")
+          }
+      }
+  
+    const handleDestinationChange = async(e) =>
+      {
+        setDestination(e.target.value)
+        try 
+          {
+            const res = await axios.get(`${import.meta.env.VITE_BASE_URL}/map/get-suggestion`,
+              {
+                params : 
+                  {
+                    input : e.target.value
+                  },
+                headers : 
+                  {
+                    Authorization : `Bearer ${localStorage.getItem('token')}`
+                  }
+              })
+            setDestinationSuggestion(res.data)
+          }
+        catch(error)
+          {
+            console.log(error);            
+            // throw new Error("Failed to fetch suggestions. Please try again later.")
+          }
+      }
+      
+    const findTrip = async() =>
+      {
+        setLocationSearchPanel(false)
+        setVehicleSelectPanel(true)
+        const res = await axios.get(`${import.meta.env.VITE_BASE_URL}/ride/get-fare`,
+          {
+            params : 
+              {
+                origin,
+                destination
+              },
+            headers : 
+              {
+                Authorization : `Bearer ${localStorage.getItem('token')}`
+              }
+          })
+        setFare(res.data)
+      }
+
+    const createRide = async() =>
+      {
+        const res = await axios.post(`${import.meta.env.VITE_BASE_URL}/ride/create-ride`,
+          {
+            origin,
+            destination,
+            vehicleType
+          },
+          {
+            headers : 
+              {
+                Authorization : `Bearer ${localStorage.getItem('token')}`
+              }
+          }) 
+        console.log(res.data);
+               
+      }
+
+    const submitHandler = (e) =>
+      {
+        e.preventDefault()
+      }
     return (
       <div className='h-screen'>
         <div>
@@ -143,19 +243,80 @@ const UserHome = () =>
             </button>
         </div>
         <div ref={locationSearchPanelRef} className='bg-white h-screen w-full p-6 fixed z-10 bottom-0 translate-y-full'>
-          <LocationSearch setLocationSearchPanel={setLocationSearchPanel} setVehicleSelectPanel={setVehicleSelectPanel} />
+          <div>
+            <h5
+              onClick={() =>
+                {
+                  setLocationSearchPanel(false)
+                }}
+              className='ri-arrow-down-wide-line absolute right-6 text-2xl'>
+            </h5>
+            <h4 className='text-3xl font-semibold'>Find a trip</h4>
+            <form onSubmit={(e) =>
+              {
+                submitHandler(e)
+              }}>
+              <input
+                onClick={() =>
+                  {
+                    setActiveField('origin')
+                  }}
+                className='bg-[#eee] w-full px-8 py-2 mt-6 text-base placeholder:text-base rounded-lg' 
+                type="text" 
+                placeholder='Enter Origin'
+                value={origin}
+                onChange={handleOriginChange} />
+              <input
+                onClick={() =>
+                  {
+                    setActiveField('destination')
+                  }}
+                className='bg-[#eee] w-full px-8 py-2 mt-3 text-base placeholder:text-base rounded-lg' 
+                type="text" 
+                placeholder='Enter Destination'
+                value={destination}
+                onChange={handleDestinationChange} />
+              <button 
+                onClick={findTrip}
+                className='bg-green-600 text-white w-full mt-4 font-semibold p-2 rounded-lg'>
+                Find Trip
+              </button>            
+            </form>
+          </div>
+          <LocationSearch
+            suggestion={activeField === 'origin' ? originSuggestion : destinationSuggestion}
+            setOrigin={setOrigin}
+            setDestination={setDestination}
+            activeField={activeField} />
         </div>
 
         <div ref={vehicleSelectPanelRef} className='bg-white w-full p-6 fixed z-10 bottom-0 translate-y-full'>
-          <VehicleSelect setVehicleSelectPanel={setVehicleSelectPanel} setConfirmVehiclePanel={setConfirmVehiclePanel} />
+          <VehicleSelect
+            fare={fare}
+            setVehicleType={setVehicleType}
+            setVehicleSelectPanel={setVehicleSelectPanel}
+            setConfirmVehiclePanel={setConfirmVehiclePanel} />
         </div>
 
         <div ref={confirmVehiclePanelRef} className='bg-white w-full p-6 fixed z-10 bottom-0 translate-y-full'>
-          <ConfirmVehicle setConfirmVehiclePanel={setConfirmVehiclePanel} setLookingDriverPanel={setLookingDriverPanel} />
+          <ConfirmVehicle
+            origin={origin}
+            destination={destination}
+            fare={fare}
+            vehicleType={vehicleType}
+            createRide={createRide}
+            setConfirmVehiclePanel={setConfirmVehiclePanel}
+            setLookingDriverPanel={setLookingDriverPanel} />
         </div>
 
         <div ref={lookingDriverPanelRef} className='bg-white w-full p-6 fixed z-10 bottom-0 translate-y-full'>
-          <LookingDriver setLookingDriverPanel={setLookingDriverPanel} setConfirmDriverPanel={setConfirmDriverPanel} />
+          <LookingDriver
+            origin={origin}
+            destination={destination}
+            fare={fare}
+            vehicleType={vehicleType}
+            setLookingDriverPanel={setLookingDriverPanel}
+            setConfirmDriverPanel={setConfirmDriverPanel} />
         </div>
 
         <div ref={confirmDriverPanelRef} className='bg-white h-screen w-full p-6 fixed z-10 bottom-0 translate-y-full'>

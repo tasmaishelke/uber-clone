@@ -6,12 +6,12 @@ const { getFare, getOtp } = require('../services/rideService')
 
 //middleware
 const { authUser } = require('../middlewares/authMiddleware')
-const { body, validationResult } = require('express-validator')
+const { body, query, validationResult } = require('express-validator')
 
-router.post('/create',
+router.post('/create-ride',
     authUser,
     [
-        body('origin').isString().isLength({ min: 3 }).withMessage('Invalid pickup address'),
+        body('origin').isString().isLength({ min: 3 }).withMessage('Invalid origin address'),
         body('destination').isString().isLength({ min: 3 }).withMessage('Invalid destination address'),
         body('vehicleType').isString().isIn([ 'auto', 'car', 'motorcycle' ]).withMessage('Invalid vehicle type'),
     ],
@@ -42,12 +42,48 @@ router.post('/create',
             try 
                 {
                     const ride = await rideSchema.create(rideObject)
-                    return res.status(201).json(ride)                    
+                    return res.status(201).json(ride)
                 }
             catch(error) 
                 {
                     return res.status(500).json({ Message : error.message})
                 }
         })
+
+router.get('/get-fare',
+    authUser,
+    [
+        query('origin').isString().isLength({ min: 3 }).withMessage('Invalid origin address'),
+        query('destination').isString().isLength({ min: 3 }).withMessage('Invalid destination address'),
+    ],
+    async(req, res, next) =>
+        {
+            const errors = validationResult(req)
+            if(!errors.isEmpty())
+                {
+                    return res.status(400).json({ errors : errors.array()});
+                }
+            
+            const { origin, destination} = req.query
+            try 
+                {
+                    const fare = await getFare(origin, destination)
+                    return res.status(201).json(fare)
+                }
+            catch(error) 
+                {
+                    return res.status(500).json({ Message : error.message})
+                }
+
+        })
+
+
+
+
+
+
+
+
+
 
 module.exports = router
