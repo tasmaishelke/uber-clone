@@ -29,7 +29,7 @@ const CaptainProtectWrapper = ({ children }) =>
             {
               if(res.status==200)
                 {
-                  setCaptainContext(res.data.captain)
+                  setCaptainContext(res.data)
                   setIsLoading(false)
                 }
             })

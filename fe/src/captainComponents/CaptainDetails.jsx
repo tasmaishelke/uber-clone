@@ -11,7 +11,7 @@ const CaptainDetails = () =>
         <div className='flex items-center justify-between'>
             <div className='flex items-center justify-start gap-4'>
               <img className='h-10 w-10 rounded-full' src={profilePhoto} alt="Profile Photo" />
-              <h4 className='text-lg font-medium'>Tasmai shelke</h4>
+              <h4 className='text-lg font-medium'>{console.log(captainContext)}</h4>
             </div>
             <div>
               <h4 className='text-xl font-semibold'>Rs 250</h4>

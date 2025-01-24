@@ -29,7 +29,7 @@ const UserProtectWrapper = ({ children }) =>
             {
               if(res.status==200)
                 {
-                  setUserContext(res.data.user) 
+                  setUserContext(res.data) 
                   setIsLoading(false)
                 }
             })

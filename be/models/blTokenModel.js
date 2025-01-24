@@ -6,7 +6,7 @@ const blacklistTokenSchema = new mongoose.Schema(
             {
                 type : String,
                 required : true,
-                unique : true,
+                // unique : true,
             },
         createdAt : 
             {

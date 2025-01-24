@@ -11,7 +11,7 @@ import captainLogo from '../assets/captain.jpg'
 
 const CaptainHome = () => 
   {
-    const [ridePopUpPanel, setRidePopUpPanel] = useState(true)
+    const [ridePopUpPanel, setRidePopUpPanel] = useState(false)
     const [confirmRidePopUpPanel, setConfirmRidePopUpPanel] = useState(false)
 
     const ridePopUpPanelRef = useRef(null)
