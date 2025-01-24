@@ -33,7 +33,7 @@ app.use('/ride', rideRoutes);
 const start = async() =>
     {
         await connectDb();
-        app.listen(process.env.PORT, console.log(`Server is connected to port ${process.env.PORT}`));       
+        app.listen(process.env.PORT, console.log(`Node.js server is connected to port ${process.env.PORT}`));       
     };
 
 start();
