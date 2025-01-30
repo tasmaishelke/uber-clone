@@ -1,8 +1,10 @@
-import React, { useRef, useState } from 'react'
+import React, { useRef, useState, useContext, useEffect } from 'react'
 import { Link } from 'react-router-dom'
 import gsap from 'gsap'
 import { useGSAP } from '@gsap/react'
 import axios from 'axios'
+import { UserDataContext } from '../context/UserContext'
+import { SocketDataContext } from '../context/SocketContext'
 
 import LocationSearch from '../userComponents/LocationSearch'
 import VehicleSelect from '../userComponents/VehicleSelect'
@@ -36,7 +38,17 @@ const UserHome = () =>
     const lookingDriverPanelRef = useRef(null)
     const confirmDriverPanelRef = useRef(null)
 
-
+    const { userContext } = useContext(UserDataContext)
+    const { socket } = useContext(SocketDataContext)
+    
+    useEffect(() =>
+      {
+        socket.emit('join',
+          {
+            userType : 'user',
+            userId : userContext._id
+          })
+      }, [userContext])
 
     useGSAP(() =>
       {

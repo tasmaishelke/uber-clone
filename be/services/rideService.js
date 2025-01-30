@@ -1,4 +1,5 @@
 const crypto = require('crypto')
+const captainSchema = require('../models/captainModel');
 const { getDistanceTime } = require('./mapService')
 
 const getFare = async(origin, destination) =>
@@ -38,4 +39,19 @@ const getOtp = (num) =>
         return otp
     }
 
-module.exports = { getFare, getOtp }
+const getCaptainsInTheRadius = async(ltd, lng, radius) => 
+    {
+        const captains = await captainSchema.find(
+            {
+                location:
+                    {
+                        $geoWithin: 
+                            {
+                                $centerSphere: [ [ ltd, lng ], radius / 6371 ]
+                            }
+                    }
+            });
+        return captains;
+    }
+
+module.exports = { getFare, getOtp, getCaptainsInTheRadius }
