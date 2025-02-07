@@ -20,14 +20,14 @@ const LookingDriver = (props) =>
             <div className='flex items-center gap-5 p-2 border-b-2'>
               <i className='ri-map-pin-user-fill text-2xl'></i>
               <div>
-                <p className='text-sm -mt-1 font-medium'>{props.origin}</p>
+                <p className='text-sm font-medium'>{props.origin}</p>
               </div>
             </div>
 
             <div className='flex items-center gap-5 p-2 border-b-2'>
               <i className='ri-map-pin-2-fill text-2xl'></i>
               <div>
-                <p className='text-sm -mt-1 font-medium'>{props.destination}</p>
+                <p className='text-sm font-medium'>{props.destination}</p>
               </div>
             </div>
 

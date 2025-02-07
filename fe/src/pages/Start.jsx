@@ -16,7 +16,7 @@ const Start = () =>
             </Link>
           </div>
         </div>
-      //tnjjqbs619@itmy.org
+      //jatek63448@owlny.com
     )
   }
 

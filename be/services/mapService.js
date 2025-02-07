@@ -1,9 +1,10 @@
 const axios  = require('axios')
 
-const getAddressCoordinate = async(address) =>
+const mapsApiKey = process.env.MAPS_API_KEY;
+
+const getCoordinate = async(origin) =>
     {
-        const apiKey = process.env.GOOGLE_MAPS_API;
-        const url = `https://maps.gomaps.pro/maps/api/geocode/json?address=${encodeURIComponent(address)}&key=${apiKey}`;
+        const url = `https://maps.gomaps.pro/maps/api/geocode/json?address=${encodeURIComponent(origin)}&key=${mapsApiKey}`;
 
         try
             {
@@ -30,8 +31,7 @@ const getAddressCoordinate = async(address) =>
 
 const getDistanceTime = async(origin, destination) =>
     {
-        const apiKey = process.env.GOOGLE_MAPS_API;
-        const url = `https://maps.gomaps.pro/maps/api/distancematrix/json?origins=${encodeURIComponent(origin)}&destinations=${encodeURIComponent(destination)}&key=${apiKey}`;
+        const url = `https://maps.gomaps.pro/maps/api/distancematrix/json?origins=${encodeURIComponent(origin)}&destinations=${encodeURIComponent(destination)}&key=${mapsApiKey}`;
 
         try
             {
@@ -58,8 +58,7 @@ const getDistanceTime = async(origin, destination) =>
 
 const getSuggestion = async(input) =>
     {
-        const apiKey = process.env.GOOGLE_MAPS_API;
-        const url = `https://maps.gomaps.pro/maps/api/place/autocomplete/json?input=${encodeURIComponent(input)}&key=${apiKey}`;
+        const url = `https://maps.gomaps.pro/maps/api/place/autocomplete/json?input=${encodeURIComponent(input)}&key=${mapsApiKey}`;
 
         try
             {
@@ -80,4 +79,4 @@ const getSuggestion = async(input) =>
             }
     }
 
-module.exports = { getAddressCoordinate, getDistanceTime, getSuggestion }
+module.exports = { getCoordinate, getDistanceTime, getSuggestion }

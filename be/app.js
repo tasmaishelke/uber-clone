@@ -1,6 +1,3 @@
-const dotenv = require('dotenv');
-dotenv.config();
-
 const express = require('express');
 const app = express();
 const connectDb = require('./config/connectDb');
@@ -15,7 +12,6 @@ const cors = require('cors');
 app.use(cors());
 const cookieparser = require('cookie-parser');
 app.use(cookieparser());
-
 app.use(express.json());
 
 
@@ -33,7 +29,7 @@ app.use('/ride', rideRoutes);
 const start = async() =>
     {
         await connectDb();
-        app.listen(process.env.PORT, console.log(`Node.js server is connected to port ${process.env.PORT}`));       
     };
-
 start();
+
+module.exports = app

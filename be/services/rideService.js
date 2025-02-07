@@ -39,7 +39,7 @@ const getOtp = (num) =>
         return otp
     }
 
-const getCaptainsInTheRadius = async(ltd, lng, radius) => 
+const getCaptainsInRadius = async(ltd, lng, radius) => 
     {
         const captains = await captainSchema.find(
             {
@@ -54,4 +54,6 @@ const getCaptainsInTheRadius = async(ltd, lng, radius) =>
         return captains;
     }
 
-module.exports = { getFare, getOtp, getCaptainsInTheRadius }
+
+
+module.exports = { getFare, getOtp, getCaptainsInRadius }

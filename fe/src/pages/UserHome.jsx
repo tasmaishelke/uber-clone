@@ -1,10 +1,12 @@
 import React, { useRef, useState, useContext, useEffect } from 'react'
-import { Link } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
 import gsap from 'gsap'
 import { useGSAP } from '@gsap/react'
 import axios from 'axios'
 import { UserDataContext } from '../context/UserContext'
 import { SocketDataContext } from '../context/SocketContext'
+
+import LiveTracking from '../components/LiveTracking'
 
 import LocationSearch from '../userComponents/LocationSearch'
 import VehicleSelect from '../userComponents/VehicleSelect'
@@ -31,6 +33,7 @@ const UserHome = () =>
     const [activeField, setActiveField] = useState(null)
     const [fare, setFare] = useState({})
     const [vehicleType, setVehicleType] = useState(null)
+    const [fullRideDetail, setFullRideDetail] = useState(null)
 
     const locationSearchPanelRef = useRef(null)
     const vehicleSelectPanelRef = useRef(null)
@@ -40,6 +43,9 @@ const UserHome = () =>
 
     const { userContext } = useContext(UserDataContext)
     const { socket } = useContext(SocketDataContext)
+
+    const navigate = useNavigate()
+    
     
     useEffect(() =>
       {
@@ -49,6 +55,20 @@ const UserHome = () =>
             userId : userContext._id
           })
       }, [userContext])
+    
+    socket.on('ride-confirmed',(data) => 
+      {
+        setFullRideDetail(data)
+        setLookingDriverPanel(false)
+        setConfirmDriverPanel(true)
+      })
+    
+    socket.on('ride-started',(data) => 
+      {
+        setFullRideDetail(data)
+        setConfirmDriverPanel(false)
+        navigate('/user/riding', {state : {fullRidingDetail : data}})
+      })
 
     useGSAP(() =>
       {
@@ -211,7 +231,7 @@ const UserHome = () =>
 
     const createRide = async() =>
       {
-        const res = await axios.post(`${import.meta.env.VITE_BASE_URL}/ride/create-ride`,
+        await axios.post(`${import.meta.env.VITE_BASE_URL}/ride/create-ride`,
           {
             origin,
             destination,
@@ -222,9 +242,7 @@ const UserHome = () =>
               {
                 Authorization : `Bearer ${localStorage.getItem('token')}`
               }
-          }) 
-        console.log(res.data);
-               
+          })
       }
 
     const submitHandler = (e) =>
@@ -233,15 +251,15 @@ const UserHome = () =>
       }
     return (
       <div className='h-screen'>
-        <div>
-          <img className='absolute w-16 ml-5 mt-5' src={userLogo} alt="Uber Logo" />
-          <Link to='/user/logout' className='bg-white fixed flex items-center justify-center right-2 top-2 h-10 w-10 rounded-full'>
+        <div >
+          <img className='absolute z-10 w-16 ml-5 mt-5' src={userLogo} alt="Uber Logo" />
+          <Link to='/user/logout' className='bg-white z-10 fixed flex items-center justify-center right-1 top-1 h-12 w-12 rounded-full'>
             <i className='ri-logout-box-r-line text-lg'></i>
           </Link>
         </div>
 
         <div className='h-3/5'>
-          <img className='h-full w-full object-cover' src="https://www.hanbit.co.kr/data/editor/20210429161116_qvzgnfvw.gif" alt="" />      
+          <LiveTracking />
         </div> 
 
         <div className='h-2/5 p-6 flex'>
@@ -332,7 +350,9 @@ const UserHome = () =>
         </div>
 
         <div ref={confirmDriverPanelRef} className='bg-white w-full p-6 fixed z-10 bottom-0 translate-y-full'>
-          <ConfirmDriver setConfirmDriverPanel={setConfirmDriverPanel}  />
+          <ConfirmDriver
+            fullRideDetail={fullRideDetail}
+            setConfirmDriverPanel={setConfirmDriverPanel}  />
         </div>
 
       </div>

@@ -1,7 +1,7 @@
 const express = require('express')
 const router = express.Router();
 
-const { getAddressCoordinate, getDistanceTime, getSuggestion } = require('../services/mapService')
+const { getCoordinate, getDistanceTime, getSuggestion } = require('../services/mapService')
 
 // middlewares
 const { authUser } = require('../middlewares/authMiddleware')
@@ -23,7 +23,7 @@ router.get('/get-coordinate',
             const { address } = req.query;
             try
                 {
-                    const coordinate = await getAddressCoordinate(address);
+                    const coordinate = await getCoordinate(address);
                     res.status(200).json(coordinate)
                 }
             catch(error)

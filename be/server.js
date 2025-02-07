@@ -1,12 +1,14 @@
+const dotenv = require('dotenv');
+dotenv.config();
+
 const http = require('http');
 const app = require('./app');
-const { initializeSocket } = require('./socket');
-const port = 4000;
-
 const server = http.createServer(app);
+const { initializeSocket } = require('./socket');
 
 initializeSocket(server);
 
-server.listen(port, () => {
-    console.log(`Socket.IO server is running on port ${port}`);
-});
+server.listen(process.env.PORT, () => 
+    {
+        console.log(`Socket.IO and Node.js server is running on port ${process.env.PORT}`);
+    });
