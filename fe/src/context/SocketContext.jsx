@@ -3,7 +3,7 @@ import { io } from 'socket.io-client';
 
 export const SocketDataContext = createContext();
 
-const socket = io('http://localhost:3000');
+const socket = io('https://rx7z3ptt-3000.inc1.devtunnels.ms');
 
 const SocketContext = ({children}) => 
     {
